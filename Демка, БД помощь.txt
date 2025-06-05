@@ -1,0 +1,51 @@
+-- Таблица Преподаватель
+CREATE TABLE Преподаватель (
+    id_teacher_INT PRIMARY KEY IDENTITY(1,1),
+    Familia_teacher_NVARCHAR(255),
+    Imya_teacher_NVARCHAR(255),
+    Orchestvo_teacher_NVARCHAR(255),
+    Post_NVARCHAR(255),
+    Telefon_NVARCHAR(20)
+);
+
+-- Таблица Студент
+CREATE TABLE Студент (
+    id_student_INT PRIMARY KEY IDENTITY(1,1),
+    id_teacher_INT,
+    Familia_student_NVARCHAR(255),
+    Imya_student_NVARCHAR(255),
+    Orchestvo_student_NVARCHAR(255),
+    Telefon_NVARCHAR(20),
+    Date_birth_DATE,
+    Email_NVARCHAR(255),
+    FOREIGN_KEY (id_teacher) REFERENCES Преподаватель(id_teacher)
+);
+
+-- Таблица Курс
+CREATE TABLE Курс (
+    id_course_INT PRIMARY KEY IDENTITY(1,1),
+    Course_name_NVARCHAR(255),
+    Description_NVARCHAR(MAX),
+    Price_DECIMAL(10, 2)
+);
+
+-- Таблица Оценка
+CREATE TABLE Оценка (
+    id_grade_INT PRIMARY KEY IDENTITY(1,1),
+    id_student_INT,
+    id_course_INT,
+    Grade_INT,
+    FOREIGN_KEY (id_student) REFERENCES Студент(id_student),
+    FOREIGN_KEY (id_course) REFERENCES Курс(id_course)
+);
+
+-- Таблица Посещаемость
+CREATE TABLE Посещаемость (
+    id_attendance_INT PRIMARY KEY IDENTITY(1,1),
+    id_student_INT,
+    id_course_INT,
+    Date_attendance_DATE,
+    Status_BIT, -- 1 - присутствовал, 0 - отсутствовал
+    FOREIGN_KEY (id_student) REFERENCES Студент(id_student),
+    FOREIGN_KEY (id_course) REFERENCES Курс(id_course)
+);
